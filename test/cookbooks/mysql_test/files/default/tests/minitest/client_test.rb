@@ -1,6 +1,6 @@
 require File.expand_path('../support/helpers.rb', __FILE__)
 
-describe 'mysql::client' do
+describe 'mysqlx::client' do
   include Helpers::Mysql
 
   it 'installs the mysql client package' do

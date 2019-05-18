@@ -19,7 +19,12 @@
 
 # Probably driven from wrapper cookbooks, environments, or roles.
 # Keep in this namespace for backwards compat
-default['mysql']['bind_address']               = node.attribute?('cloud') && node['cloud']['local_ipv4'] ? node['cloud']['local_ipv4'] : node['ipaddress']
+default["mysql"]["bind_address"] =
+  if node.attribute?("cloud") && !node["cloud"].nil? && node["cloud"]["local_ipv4"]
+    node["cloud"]["local_ipv4"]
+  else
+    node["ipaddress"]
+  end
 default['mysql']['port']                       = 3306
 default['mysql']['nice']                       = 0
 
@@ -40,8 +45,8 @@ default['mysql']['remove_test_database']            = false
 default['mysql']['root_network_acl']                = nil
 default['mysql']['tunable']['character-set-server'] = 'utf8'
 default['mysql']['tunable']['collation-server']     = 'utf8_general_ci'
-default['mysql']['tunable']['lower_case_table_names']  = nil
-default['mysql']['tunable']['back_log']             = '128'
+default['mysql']['tunable']['lower_case_table_names'] = nil
+default['mysql']['tunable']['back_log'] = '128'
 default['mysql']['tunable']['key_buffer_size']           = '256M'
 default['mysql']['tunable']['myisam_sort_buffer_size']   = '8M'
 default['mysql']['tunable']['myisam_max_sort_file_size'] = '2147483648'
@@ -57,9 +62,8 @@ default['mysql']['tunable']['max_heap_table_size']  = node['mysql']['tunable']['
 default['mysql']['tunable']['bulk_insert_buffer_size'] = node['mysql']['tunable']['tmp_table_size']
 default['mysql']['tunable']['net_read_timeout']     = '30'
 default['mysql']['tunable']['net_write_timeout']    = '30'
-default['mysql']['tunable']['table_cache']          = '128'
-default['mysql']['tunable']['table_open_cache']     = node['mysql']['tunable']['table_cache'] # table_cache is deprecated
-                                                                                              # in favor of table_open_cache
+default['mysql']['tunable']['table_cache']          = '128' # deprecated
+default['mysql']['tunable']['table_open_cache']     = node['mysql']['tunable']['table_cache']
 default['mysql']['tunable']['thread_cache_size']    = 8
 default['mysql']['tunable']['thread_concurrency']   = 10
 default['mysql']['tunable']['thread_stack']         = '256K'

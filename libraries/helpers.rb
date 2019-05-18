@@ -22,23 +22,29 @@ module Opscode
     # Opscode Mysql Helpers
     module Helpers
       def debian_before_squeeze?
-        (node['platform'] == 'debian') && (node['platform_version'].to_f < 6.0)
+        (node["platform"] == "debian") && (node["platform_version"].to_f < 6.0)
       end
 
       def ubuntu_before_lucid?
-        (node['platform'] == 'ubuntu') && (node['platform_version'].to_f < 10.0)
+        (node["platform"] == "ubuntu") && (node["platform_version"].to_f < 10.0)
       end
 
       def assign_root_password_cmd
-        str = '/usr/bin/mysqladmin'
-        str << ' -u root password '
-        str << node['mysql']['server_root_password']
+        str = "/usr/bin/mysqladmin"
+        str << " -u root password "
+        str << node["mysql"]["server_root_password"]
+      end
+
+      def grants_file
+        "/etc/mysql/grants.sql"
       end
 
       def install_grants_cmd
-        str = '/usr/bin/mysql'
-        str << ' -u root '
-        node['mysql']['server_root_password'].empty? ? str << ' < /etc/mysql_grants.sql' : str << " -p#{node['mysql']['server_root_password']} < /etc/mysql_grants.sql"
+        str = "/usr/bin/mysql -u root "
+        unless node["mysql"]["server_root_password"].empty?
+          str << " -p#{node['mysql']['server_root_password']}"
+        end
+        str << " < #{grants_file}"
       end
     end
   end

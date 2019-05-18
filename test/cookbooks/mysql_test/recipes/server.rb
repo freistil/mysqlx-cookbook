@@ -2,8 +2,8 @@ node.override['mysql']['server_debian_password'] = 'ilikerandompasswords'
 node.override['mysql']['server_repl_password']   = 'ilikerandompasswords'
 node.override['mysql']['server_root_password']   = 'ilikerandompasswords'
 
-include_recipe 'mysql::ruby'
-include_recipe 'mysql::server'
+include_recipe 'mysqlx::ruby'
+include_recipe 'mysqlx::server'
 
 mysql_connection = {
   :host     => 'localhost',

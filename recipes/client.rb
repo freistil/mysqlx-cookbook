@@ -21,37 +21,37 @@
 # to debian_before_squeeze? and ubuntu_before_lucid?
 ::Chef::Recipe.send(:include, Opscode::Mysql::Helpers)
 
-case node['platform']
-when 'windows'
-  package_file = node['mysql']['client']['package_file']
+case node["platform"]
+when "windows"
+  package_file = node["mysql"]["client"]["package_file"]
   remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
-    source node['mysql']['client']['url']
-    not_if { File.exists? "#{Chef::Config[:file_cache_path]}/#{package_file}" }
+    source node["mysql"]["client"]["url"]
+    not_if { File.exist? "#{Chef::Config[:file_cache_path]}/#{package_file}" }
   end
 
-  windows_package node['mysql']['client']['packages'].first do
+  windows_package node["mysql"]["client"]["packages"].first do
     source "#{Chef::Config[:file_cache_path]}/#{package_file}"
   end
-  ENV['PATH'] += ";#{node['mysql']['client']['bin_dir']}"
-  windows_path node['mysql']['client']['bin_dir'] do
+  ENV["PATH"] += ";#{node['mysql']['client']['bin_dir']}"
+  windows_path node["mysql"]["client"]["bin_dir"] do
     action :add
   end
   def package(*args, &blk)
     windows_package(*args, &blk)
   end
-when 'mac_os_x'
-  include_recipe 'homebrew::default'
+when "mac_os_x"
+  include_recipe "homebrew::default"
 end
 
-node['mysql']['client']['packages'].each do |name|
+node["mysql"]["client"]["packages"].each do |name|
   package name
 end
 
-if platform_family?('windows')
-  ruby_block 'copy libmysql.dll into ruby path' do
+if platform_family?("windows")
+  ruby_block "copy libmysql.dll into ruby path" do
     block do
-      require 'fileutils'
-      FileUtils.cp "#{node['mysql']['client']['lib_dir']}\\libmysql.dll", node['mysql']['client']['ruby_dir']
+      require "fileutils"
+      FileUtils.cp "#{node['mysql']['client']['lib_dir']}\\libmysql.dll", node["mysql"]["client"]["ruby_dir"]
     end
     not_if { File.exist?("#{node['mysql']['client']['ruby_dir']}\\libmysql.dll") }
   end

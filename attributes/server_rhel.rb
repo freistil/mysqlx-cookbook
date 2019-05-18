@@ -35,7 +35,7 @@ when 'rhel'
 
   default['mysql']['server']['pid_file']             = '/var/run/mysqld/mysqld.pid'
   default['mysql']['server']['socket']               = '/var/lib/mysql/mysql.sock'
-  default['mysql']['server']['grants_path']          = '/etc/mysql_grants.sql'
+  default['mysql']['server']['grants_path']          = '/etc/mysql/grants.sql'
   default['mysql']['server']['old_passwords']        = 1
   default['mysql']['server']['service_name']        = 'mysqld'
 

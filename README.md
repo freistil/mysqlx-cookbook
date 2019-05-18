@@ -1,12 +1,18 @@
-mysql Cookbook
-==============
-[![Build Status](https://secure.travis-ci.org/opscode-cookbooks/mysql.png?branch=master)](http://travis-ci.org/opscode-cookbooks/mysql)
+# mysqlx Cookbook
 
 Installs and configures MySQL client or server.
 
+mysqlx is a Chef cookbook for setting up MySQL. It started as a fork of the
+`mysql` community cookbook (sous-chefs/mysql) version 4.1.2. This was the
+last version before its maintainers switched to a library cookbook approach.
+This new approach using Chef resources introduced a lot of complexity and
+its multi-instance setup is more or less obsolete given that there are
+VMs and containers. That's why we decided to go back to the original
+classic Chef code and bring it up to modern standards.
+
 Requirements
 ------------
-Chef 0.10.10+.
+Chef 13+.
 
 Platform
 --------
