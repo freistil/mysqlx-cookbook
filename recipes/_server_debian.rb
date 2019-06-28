@@ -1,5 +1,5 @@
 #----
-# Set up preseeding data for debian packages
+# Set up preseeding data for Debian packages
 #---
 directory "/var/cache/local/preseeding" do
   owner "root"
@@ -22,9 +22,6 @@ execute "preseed mysql-server" do
   action  :nothing
 end
 
-#----
-# Install software
-#----
 node["mysql"]["server"]["packages"].each do |name|
   package name do
     action :install
@@ -66,16 +63,8 @@ template "/etc/mysql/debian.cnf" do
   notifies :restart, "service[mysql]"
 end
 
-#----
-# data_dir
-#----
-
-# DRAGONS!
-# Setting up data_dir will only work on initial node converge...
-# Data will NOT be moved around the filesystem when you change data_dir
-# To do that, we'll need to stash the data_dir of the last chef-client
-# run somewhere and read it. Implementing that will come in "The Future"
-
+# CAUTION: Setting up data_dir will only work on initial node converge!
+# Data can NOT be moved around the filesystem by changing `data_dir`.
 directory node["mysql"]["data_dir"] do
   owner     "mysql"
   group     "mysql"
@@ -125,12 +114,12 @@ template "/etc/mysql/my.cnf" do
   owner "root"
   group "root"
   mode 0o644
+  manage_symlink_source false
+  force_unlink true
   notifies :run, "bash[move mysql data to datadir]", :immediately
   notifies :restart, "service[mysql]"
 end
 
-# don't try this at home
-# http://ubuntuforums.org/showthread.php?t=804126
 bash "move mysql data to datadir" do
   user "root"
   code <<-MOVE_AND_RESTART
@@ -139,9 +128,14 @@ bash "move mysql data to datadir" do
   /usr/sbin/service mysql start
   MOVE_AND_RESTART
   action :nothing
-  only_if { node["mysql"]["data_dir"] != "/var/lib/mysql" }
-  only_if "[ `stat -c %h #{node['mysql']['data_dir']}` -eq 2 ]"
-  not_if "[ `stat -c %h /var/lib/mysql/` -eq 2 ]"
+  only_if do
+    subdir_count_source = File::Stat.new("/var/lib/mysql").nlink
+    subdir_count_destination = File::Stat.new(node["mysql"]["data_dir"]).nlink
+
+    node["mysql"]["data_dir"] != "/var/lib/mysql" &&
+      subdir_count_source != 2 &&
+      subdir_count_destination == 2
+  end
 end
 
 service "mysql" do

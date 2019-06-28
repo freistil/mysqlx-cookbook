@@ -20,7 +20,9 @@
 # limitations under the License.
 #
 
-node.set["build_essential"]["compiletime"] = true
+# TODO: Check if this node attribute is still required
+node.normal["build_essential"]["compiletime"] = true
+
 include_recipe "build-essential::default"
 include_recipe "mysqlx::client"
 

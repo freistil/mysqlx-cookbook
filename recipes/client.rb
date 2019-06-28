@@ -51,8 +51,13 @@ if platform_family?("windows")
   ruby_block "copy libmysql.dll into ruby path" do
     block do
       require "fileutils"
-      FileUtils.cp "#{node['mysql']['client']['lib_dir']}\\libmysql.dll", node["mysql"]["client"]["ruby_dir"]
+      FileUtils.cp "#{node['mysql']['client']['lib_dir']}\\libmysql.dll",
+                   node["mysql"]["client"]["ruby_dir"]
     end
-    not_if { File.exist?("#{node['mysql']['client']['ruby_dir']}\\libmysql.dll") }
+    not_if do
+      File.exist?(
+        File.join(node["mysql"]["client"]["ruby_dir"], "libmysql.dll"),
+      )
+    end
   end
 end

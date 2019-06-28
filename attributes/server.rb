@@ -20,7 +20,8 @@
 # Probably driven from wrapper cookbooks, environments, or roles.
 # Keep in this namespace for backwards compat
 default["mysql"]["bind_address"] =
-  if node.attribute?("cloud") && !node["cloud"].nil? && node["cloud"]["local_ipv4"]
+  if node.attribute?("cloud") && !node["cloud"].nil? &&
+      node["cloud"]["local_ipv4"]
     node["cloud"]["local_ipv4"]
   else
     node["ipaddress"]
@@ -58,12 +59,15 @@ default["mysql"]["tunable"]["max_connect_errors"]   = "10"
 default["mysql"]["tunable"]["concurrent_insert"]    = "2"
 default["mysql"]["tunable"]["connect_timeout"]      = "10"
 default["mysql"]["tunable"]["tmp_table_size"]       = "32M"
-default["mysql"]["tunable"]["max_heap_table_size"]  = node["mysql"]["tunable"]["tmp_table_size"]
-default["mysql"]["tunable"]["bulk_insert_buffer_size"] = node["mysql"]["tunable"]["tmp_table_size"]
+default["mysql"]["tunable"]["max_heap_table_size"] =
+  node["mysql"]["tunable"]["tmp_table_size"]
+default["mysql"]["tunable"]["bulk_insert_buffer_size"] =
+  node["mysql"]["tunable"]["tmp_table_size"]
 default["mysql"]["tunable"]["net_read_timeout"]     = "30"
 default["mysql"]["tunable"]["net_write_timeout"]    = "30"
 default["mysql"]["tunable"]["table_cache"]          = "128" # deprecated
-default["mysql"]["tunable"]["table_open_cache"]     = node["mysql"]["tunable"]["table_cache"]
+default["mysql"]["tunable"]["table_open_cache"] =
+  node["mysql"]["tunable"]["table_cache"]
 default["mysql"]["tunable"]["thread_cache_size"]    = 8
 default["mysql"]["tunable"]["thread_concurrency"]   = 10
 default["mysql"]["tunable"]["thread_stack"]         = "256K"
@@ -109,7 +113,7 @@ default["mysql"]["tunable"]["innodb_log_file_size"]            = "5M"
 default["mysql"]["tunable"]["innodb_buffer_pool_size"]         = "128M"
 default["mysql"]["tunable"]["innodb_buffer_pool_instances"]    = "4"
 default["mysql"]["tunable"]["innodb_additional_mem_pool_size"] = "8M"
-default["mysql"]["tunable"]["innodb_data_file_path"]           = "ibdata1:10M:autoextend"
+default["mysql"]["tunable"]["innodb_data_file_path"] = "ibdata1:10M:autoextend"
 default["mysql"]["tunable"]["innodb_flush_method"]             = false
 default["mysql"]["tunable"]["innodb_log_buffer_size"]          = "8M"
 default["mysql"]["tunable"]["innodb_write_io_threads"]         = "4"
@@ -122,9 +126,12 @@ if node["cpu"].nil? || node["cpu"]["total"].nil?
   default["mysql"]["tunable"]["innodb_commit_concurrency"]       = "8"
   default["mysql"]["tunable"]["innodb_read_io_threads"]          = "8"
 else
-  default["mysql"]["tunable"]["innodb_thread_concurrency"]       = (node["cpu"]["total"].to_i * 2).to_s
-  default["mysql"]["tunable"]["innodb_commit_concurrency"]       = (node["cpu"]["total"].to_i * 2).to_s
-  default["mysql"]["tunable"]["innodb_read_io_threads"]          = (node["cpu"]["total"].to_i * 2).to_s
+  default["mysql"]["tunable"]["innodb_thread_concurrency"] =
+    (node["cpu"]["total"].to_i * 2).to_s
+  default["mysql"]["tunable"]["innodb_commit_concurrency"] =
+    (node["cpu"]["total"].to_i * 2).to_s
+  default["mysql"]["tunable"]["innodb_read_io_threads"] =
+    (node["cpu"]["total"].to_i * 2).to_s
 end
 default["mysql"]["tunable"]["innodb_flush_log_at_trx_commit"]  = "1"
 default["mysql"]["tunable"]["innodb_support_xa"]               = true
@@ -149,8 +156,10 @@ default["mysql"]["innodb_status_file"] = false
 
 unless node["platform_family"] == "rhel" && node["platform_version"].to_i < 6
   # older RHEL platforms don't support these options
-  default["mysql"]["tunable"]["event_scheduler"]  = 0
-  default["mysql"]["tunable"]["binlog_format"]    = "statement" if node["mysql"]["tunable"]["log_bin"]
+  default["mysql"]["tunable"]["event_scheduler"] = 0
+  if node["mysql"]["tunable"]["log_bin"]
+    default["mysql"]["tunable"]["binlog_format"] = "STATEMENT"
+  end
 end
 
 # security options
