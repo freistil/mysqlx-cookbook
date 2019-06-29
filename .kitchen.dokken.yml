@@ -1,0 +1,27 @@
+---
+driver:
+  name: dokken
+  chef_version: 13.12
+  privileged: true
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+  chef_log_level: <%= ENV["CHEF_LOG_LEVEL"] || "auto" %>
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-16.04
+    driver:
+      image: dokken/ubuntu-16.04
+      pid_one_command: /bin/systemd
+      volumes:
+      - /var/cache/apt/archives/:/var/cache/apt/archives/
+      intermediate_instructions:
+      - RUN rm /etc/apt/apt.conf.d/docker-clean
+      - RUN apt-get -y update
+      - RUN apt-get -y install apt-transport-https lsb-release procps net-tools
