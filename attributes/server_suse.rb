@@ -12,5 +12,5 @@ when "suse"
   default["mysql"]["server"]["socket"] = "/var/run/mysql/mysql.sock"
   default["mysql"]["server"]["pid_file"] = "/var/run/mysql/mysqld.pid"
   default["mysql"]["server"]["old_passwords"] = 1
-  default["mysql"]["server"]["grants_path"] = "/etc/mysql_grants.sql"
+  default["mysql"]["server"]["grants_path"] = "/etc/mysql/grants.sql"
 end

@@ -25,7 +25,7 @@ when "debian"
 
   default["mysql"]["server"]["pid_file"] = "/var/run/mysqld/mysqld.pid"
   default["mysql"]["server"]["socket"] = "/var/run/mysqld/mysqld.sock"
-  default["mysql"]["server"]["grants_path"] = "/etc/mysql_grants.sql"
+  default["mysql"]["server"]["grants_path"] = "/etc/mysql/grants.sql"
   default["mysql"]["server"]["old_passwords"] = 1
 
   # wat

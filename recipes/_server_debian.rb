@@ -1,6 +1,7 @@
-#----
-# Set up preseeding data for Debian packages
-#---
+#
+# Preseeding data for Debian packages
+#
+
 directory "/var/cache/local/preseeding" do
   owner "root"
   group "root"
@@ -21,6 +22,10 @@ execute "preseed mysql-server" do
     "/var/cache/local/preseeding/mysql-server.seed"
   action  :nothing
 end
+
+#
+# Installation
+#
 
 node["mysql"]["server"]["packages"].each do |name|
   package name do
@@ -44,10 +49,7 @@ service "mysql" do
   action %i[enable start]
 end
 
-#----
-# Grants
-#----
-template grants_file do
+template grants_path do
   source "grants.sql.erb"
   owner  "root"
   group  "root"

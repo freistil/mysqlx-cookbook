@@ -1,5 +1,13 @@
-case node["platform_family"]
-when "windows"
+if node["platform_family"] == "windows"
+  # server attributes
+  default["mysql"]["server"]["grants_path"] = File.join(
+    node["mysql"]["windows"]["conf_dir"],
+    "grants.sql",
+  )
+  default["mysql"]["server"]["service_name"] = "mysql"
+  default["mysql"]["server"]["slow_query_log"] = 1
+
+  # windows attributes
   default["mysql"]["windows"]["version"] = "5.5.34"
   default["mysql"]["windows"]["arch"] =
     node["kernel"]["machine"] == "x86_64" ? "winx64" : "win32"
@@ -7,7 +15,6 @@ when "windows"
     node["mysql"]["windows"]["version"],
     node["mysql"]["windows"]["arch"],
   )
-
   default["mysql"]["windows"]["package_file"] = package_file
   default["mysql"]["windows"]["packages"] = ["MySQL Server 5.5"]
   default["mysql"]["windows"]["url"] =
@@ -44,10 +51,4 @@ when "windows"
   )
   default["mysql"]["windows"]["conf_dir"] = node["mysql"]["windows"]["basedir"]
   default["mysql"]["windows"]["old_passwords"] = 0
-  default["mysql"]["windows"]["grants_path"] = File.join(
-    node["mysql"]["windows"]["conf_dir"],
-    "grants.sql",
-  )
-  default["mysql"]["server"]["service_name"] = "mysql"
-  default["mysql"]["server"]["slow_query_log"] = 1
 end

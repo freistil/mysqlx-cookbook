@@ -58,8 +58,6 @@ ruby_block "root-password-set" do
   action :nothing
 end
 
-grants_path = node["mysql"]["windows"]["grants_path"]
-
 template grants_path do
   source "grants.sql.erb"
   action :create

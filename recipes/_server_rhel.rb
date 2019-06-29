@@ -4,7 +4,6 @@ node["mysql"]["server"]["packages"].each do |name|
   end
 end
 
-#----
 node["mysql"]["server"]["directories"].each do |_key, value|
   directory value do
     owner     "mysql"
@@ -22,7 +21,6 @@ directory node["mysql"]["data_dir"] do
   recursive true
 end
 
-#----
 template "initial-my.cnf" do
   path "/etc/my.cnf"
   source "my.cnf.erb"
@@ -32,7 +30,6 @@ template "initial-my.cnf" do
   notifies :start, "service[mysql-start]", :immediately
 end
 
-# hax
 service "mysql-start" do
   service_name node["mysql"]["server"]["service_name"]
   action :nothing
@@ -51,7 +48,7 @@ execute "assign-root-password" do
   only_if "/usr/bin/mysql -u root -e 'show databases;'"
 end
 
-template "/etc/mysql_grants.sql" do
+template grants_path do
   source "grants.sql.erb"
   owner  "root"
   group  "root"
@@ -67,7 +64,6 @@ execute "install-grants" do
   notifies :restart, "service[mysql]", :immediately
 end
 
-#----
 template "final-my.cnf" do
   path "/etc/my.cnf"
   source "my.cnf.erb"

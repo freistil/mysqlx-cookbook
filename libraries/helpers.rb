@@ -35,8 +35,8 @@ module Opscode
         str << node["mysql"]["server_root_password"]
       end
 
-      def grants_file
-        "/etc/mysql/grants.sql"
+      def grants_path
+        node["mysql"]["server"]["grants_path"]
       end
 
       def install_grants_cmd
@@ -44,7 +44,7 @@ module Opscode
         unless node["mysql"]["server_root_password"].empty?
           str << " -p#{node['mysql']['server_root_password']}"
         end
-        str << " < #{grants_file}"
+        str << " < #{grants_path}"
       end
     end
   end
