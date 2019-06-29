@@ -21,7 +21,7 @@ suites:
   - name: server
     run_list:
       - recipe[mysql_test::server]
-  - name: server-nondefault-data
+  - name: server-datadir
     run_list:
       - recipe[mysql_test::server]
     attributes:
