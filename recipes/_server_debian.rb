@@ -38,6 +38,12 @@ node["mysql"]["server"]["directories"].each do |_key, value|
   end
 end
 
+service "mysql" do
+  service_name "mysql"
+  supports status: true, restart: true
+  action %i[enable start]
+end
+
 #----
 # Grants
 #----
@@ -46,7 +52,7 @@ template grants_file do
   owner  "root"
   group  "root"
   mode   0o0600
-  notifies :run, "execute[install-grants]", :immediately
+  notifies :run, "execute[install-grants]"
 end
 
 cmd = install_grants_cmd
@@ -136,10 +142,4 @@ bash "move mysql data to datadir" do
       subdir_count_source != 2 &&
       subdir_count_destination == 2
   end
-end
-
-service "mysql" do
-  service_name "mysql"
-  supports status: true, restart: true
-  action %i[enable start]
 end
