@@ -17,9 +17,7 @@
 # limitations under the License.
 #
 
-# Include Opscode helper in Recipe class to get access
-# to debian_before_squeeze? and ubuntu_before_lucid?
-::Chef::Recipe.send(:include, Opscode::Mysql::Helpers)
+::Chef::Recipe.send(:include, Freistil::Mysql::Helpers)
 
 case node["platform"]
 when "windows"
@@ -51,8 +49,11 @@ if platform_family?("windows")
   ruby_block "copy libmysql.dll into ruby path" do
     block do
       require "fileutils"
-      FileUtils.cp "#{node['mysql']['client']['lib_dir']}\\libmysql.dll",
-                   node["mysql"]["client"]["ruby_dir"]
+      libmysql_dll = File.join(
+        node["mysql"]["client"]["lib_dir"],
+        "libmysql.dll",
+      )
+      FileUtils.cp libmysql_dll, node["mysql"]["client"]["ruby_dir"]
     end
     not_if do
       File.exist?(

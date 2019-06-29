@@ -18,7 +18,7 @@
 #
 
 ::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
-::Chef::Recipe.send(:include, Opscode::Mysql::Helpers)
+::Chef::Recipe.send(:include, Freistil::Mysql::Helpers)
 
 if Chef::Config[:solo]
   missing_attrs = %w[

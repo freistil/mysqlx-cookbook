@@ -1,8 +1,10 @@
 #
 # Author:: Seth Chisamore (<schisamo@opscode.com>)
 # Author:: Sean OMeara (<schisamo@opscode.com>)
+# Author:: freistil IT Ops (<cookbooks@freistil.it>)
 #
 # Copyright:: Copyright (c) 2011-2013 Opscode, Inc.
+# Copyright:: Copyright (c) 2019 freistil IT Ltd
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +19,8 @@
 # limitations under the License.
 #
 
-module Opscode
+module Freistil
   module Mysql
-    # Opscode Mysql Helpers
     module Helpers
       def debian_before_squeeze?
         (node["platform"] == "debian") && (node["platform_version"].to_f < 6.0)

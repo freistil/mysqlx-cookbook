@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-::Chef::Node.send(:include, Opscode::Mysql::Helpers)
+::Chef::Node.send(:include, Freistil::Mysql::Helpers)
 
 case node["platform_family"]
 when "rhel", "fedora"
