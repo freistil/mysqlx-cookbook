@@ -11,14 +11,9 @@ version "5.0.0"
 
 chef_version ">= 13.12"
 
-supports "ubuntu"
+supports "ubuntu", "= 16.04"
 
 depends "openssl",         "~> 1.1"
 depends "build-essential", "~> 8.1"
 depends "homebrew"
 depends "windows"
-
-recipe            "mysqlx", "Includes the client recipe to configure a client"
-recipe            "mysqlx::client", "Installs packages required for mysql clients using run_action magic"
-recipe            "mysqlx::server", "Installs packages required for mysql servers w/o manual intervention"
-recipe            "mysqlx::server_ec2", "Performs EC2-specific mountpoint manipulation"
