@@ -15,5 +15,5 @@ supports "ubuntu", "= 16.04"
 
 depends "openssl",         "~> 1.1"
 depends "build-essential", "~> 8.1"
-depends "homebrew"
+depends "homebrew", "~> 5.0"
 depends "windows"
