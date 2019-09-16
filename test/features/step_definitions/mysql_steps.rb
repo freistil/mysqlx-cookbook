@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Given "a new database server with some example data" do
   # no op
 end
@@ -23,27 +25,21 @@ Then "the expected data should be returned" do
 end
 
 Then "the inserted data should be returned for subsequent queries" do
-  begin
-    select_tv_chefs.must_include "Ainsley Harriott"
-  ensure
-    delete_chef "Ainsley Harriott"
-  end
+  select_tv_chefs.must_include "Ainsley Harriott"
+ensure
+  delete_chef "Ainsley Harriott"
 end
 
 Then "the deleted data should not be returned for subsequent queries" do
-  begin
-    select_tv_chefs.must_equal(["Nigella Lawson", "Paula Deen"])
-  ensure
-    insert_chef "Alison Holst"
-  end
+  select_tv_chefs.must_equal(["Nigella Lawson", "Paula Deen"])
+ensure
+  insert_chef "Alison Holst"
 end
 
 Then "the updated data should be returned for subsequent queries" do
-  begin
-    select_tv_chefs.must_equal(
-      ["Alison Holst", "Nigella Lawson", "Paula Hiers Deen"],
-    )
-  ensure
-    update_chef_name("Paula Hiers Deen", "Paula Deen")
-  end
+  select_tv_chefs.must_equal(
+    ["Alison Holst", "Nigella Lawson", "Paula Hiers Deen"],
+  )
+ensure
+  update_chef_name("Paula Hiers Deen", "Paula Deen")
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: mysql
 # Recipe:: client
@@ -17,7 +19,7 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, Freistil::Mysql::Helpers)
+::Chef::Recipe.send(:include, Freistil::Cookbook::Mysqlx::Helpers)
 
 case node["platform"]
 when "windows"

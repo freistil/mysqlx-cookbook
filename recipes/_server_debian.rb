@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Preseeding data for Debian packages
 #
@@ -78,11 +80,6 @@ directory node["mysql"]["data_dir"] do
   group     "mysql"
   action    :create
   recursive true
-end
-
-template "/etc/init/mysql.conf" do
-  source "init-mysql.conf.erb"
-  only_if { node["platform"] == "ubuntu" }
 end
 
 template "/etc/apparmor.d/usr.sbin.mysqld" do

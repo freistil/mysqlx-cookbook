@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if node["platform_family"] == "windows"
   # server attributes
   default["mysql"]["server"]["grants_path"] = File.join(

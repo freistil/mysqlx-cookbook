@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 group "mysql" do
   action :create
 end

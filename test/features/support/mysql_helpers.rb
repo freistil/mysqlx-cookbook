@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def query(sql)
   ssh_command = "ssh " \
     "-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no " \

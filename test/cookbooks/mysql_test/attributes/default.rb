@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Must be specified for chef-solo for successful re-converge
 override["mysql"]["server_root_password"] = "ilikerandompasswords"
 

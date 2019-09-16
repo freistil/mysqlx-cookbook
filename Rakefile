@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 load "../../Rakefile"
 
 desc "Cookbook test suite"

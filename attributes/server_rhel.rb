@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if node["platform_family"] == "rhel"
   # Probably driven from wrapper cookbooks, environments, or roles.
   # Keep in this namespace for backwards compat

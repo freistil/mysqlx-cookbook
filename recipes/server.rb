@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: mysql
 # Recipe:: default
@@ -18,7 +20,7 @@
 #
 
 ::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
-::Chef::Recipe.send(:include, Freistil::Mysql::Helpers)
+::Chef::Recipe.send(:include, Freistil::Cookbook::Mysqlx::Helpers)
 
 if Chef::Config[:solo]
   missing_attrs = %w[

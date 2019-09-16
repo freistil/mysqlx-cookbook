@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if node["platform_family"] == "freebsd"
   default["mysql"]["data_dir"] = "/var/db/mysql"
   default["mysql"]["server"]["packages"] = %w[mysql55-server]

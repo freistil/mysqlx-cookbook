@@ -2,7 +2,11 @@
 
 This file is used to list changes made in each version of the mysqlx Chef cookbook.
 
-## 5.0.0
+## v5.0.1
+
+* [CHANGED] Cleaned out unnecessary stuff
+
+## v5.0.0
 
 * Fork of the `mysql` community Chef cookbook v4.1.2
 * Dropped support for outdated Chef versions and operating systems,

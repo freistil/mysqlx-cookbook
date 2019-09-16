@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 node["mysql"]["server"]["packages"].each do |name|
   package name do
     action :install

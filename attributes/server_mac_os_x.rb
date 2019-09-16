@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 case node["platform_family"]
 when "mac_os_x"
   default["mysql"]["server"]["packages"]      = %w[mysql]

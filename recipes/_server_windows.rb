@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "win32/service"
 
 ENV["PATH"] += ";#{node['mysql']['windows']['bin_dir']}"

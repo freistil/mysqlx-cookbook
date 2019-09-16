@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 name "mysql_test"
 version "0.1.0"
 

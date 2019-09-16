@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 case node["platform_family"]
 when "suse"
   default["mysql"]["data_dir"] = "/var/lib/mysql"

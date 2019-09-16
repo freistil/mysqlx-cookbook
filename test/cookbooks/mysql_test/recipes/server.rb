@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 node.override["mysql"]["server_debian_password"] = "ilikerandompasswords"
 node.override["mysql"]["server_repl_password"]   = "ilikerandompasswords"
 node.override["mysql"]["server_root_password"]   = "ilikerandompasswords"
