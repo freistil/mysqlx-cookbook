@@ -27,5 +27,5 @@ suites:
     run_list:
       - recipe[mysql_test::server]
     attributes:
-      mysql:
+      mysqlx:
         data_dir: "/data/mysql"

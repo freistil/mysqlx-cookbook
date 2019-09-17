@@ -29,13 +29,13 @@ end
 # Installation
 #
 
-node["mysql"]["server"]["packages"].each do |name|
+node["mysqlx"]["server"]["packages"].each do |name|
   package name do
     action :install
   end
 end
 
-node["mysql"]["server"]["directories"].each do |_key, value|
+node["mysqlx"]["server"]["directories"].each do |_key, value|
   directory value do
     owner     "mysql"
     group     "mysql"
@@ -75,7 +75,7 @@ end
 
 # CAUTION: Setting up data_dir will only work on initial node converge!
 # Data can NOT be moved around the filesystem by changing `data_dir`.
-directory node["mysql"]["data_dir"] do
+directory node["mysqlx"]["data_dir"] do
   owner     "mysql"
   group     "mysql"
   action    :create
@@ -129,15 +129,15 @@ bash "move mysql data to datadir" do
   user "root"
   code <<-MOVE_AND_RESTART
   /usr/sbin/service mysql stop &&
-  mv /var/lib/mysql/* #{node['mysql']['data_dir']} &&
+  mv /var/lib/mysql/* #{node['mysqlx']['data_dir']} &&
   /usr/sbin/service mysql start
   MOVE_AND_RESTART
   action :nothing
   only_if do
     subdir_count_source = File::Stat.new("/var/lib/mysql").nlink
-    subdir_count_destination = File::Stat.new(node["mysql"]["data_dir"]).nlink
+    subdir_count_destination = File::Stat.new(node["mysqlx"]["data_dir"]).nlink
 
-    node["mysql"]["data_dir"] != "/var/lib/mysql" &&
+    node["mysqlx"]["data_dir"] != "/var/lib/mysql" &&
       subdir_count_source != 2 &&
       subdir_count_destination == 2
   end

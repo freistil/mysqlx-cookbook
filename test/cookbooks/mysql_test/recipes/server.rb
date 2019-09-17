@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-node.override["mysql"]["server_debian_password"] = "ilikerandompasswords"
-node.override["mysql"]["server_repl_password"]   = "ilikerandompasswords"
-node.override["mysql"]["server_root_password"]   = "ilikerandompasswords"
+node.override["mysqlx"]["server_debian_password"] = "ilikerandompasswords"
+node.override["mysqlx"]["server_repl_password"]   = "ilikerandompasswords"
+node.override["mysqlx"]["server_root_password"]   = "ilikerandompasswords"
 
 include_recipe "mysqlx::ruby"
 include_recipe "mysqlx::server"
@@ -10,7 +10,7 @@ include_recipe "mysqlx::server"
 mysql_connection = {
   host: "localhost",
   username: "root",
-  password: node["mysql"]["server_root_password"],
+  password: node["mysqlx"]["server_root_password"],
 }
 
 mysql_database node["mysql_test"]["database"] do
@@ -29,7 +29,7 @@ end
 
 mysql_conn_args = format(
   "--user=root --password='%<password>s'",
-  password: node["mysql"]["server_root_password"],
+  password: node["mysqlx"]["server_root_password"],
 )
 
 execute "create-sample-data" do

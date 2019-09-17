@@ -2,10 +2,10 @@
 
 case node["platform_family"]
 when "mac_os_x"
-  default["mysql"]["server"]["packages"]      = %w[mysql]
-  default["mysql"]["basedir"]                 = "/usr/local/Cellar"
-  default["mysql"]["data_dir"]                = "/usr/local/var/mysql"
-  default["mysql"]["root_group"]              = "admin"
-  default["mysql"]["mysqladmin_bin"]          = "/usr/local/bin/mysqladmin"
-  default["mysql"]["mysql_bin"]               = "/usr/local/bin/mysql"
+  default["mysqlx"]["server"]["packages"]      = %w[mysql]
+  default["mysqlx"]["basedir"]                 = "/usr/local/Cellar"
+  default["mysqlx"]["data_dir"]                = "/usr/local/var/mysql"
+  default["mysqlx"]["root_group"]              = "admin"
+  default["mysqlx"]["mysqladmin_bin"]          = "/usr/local/bin/mysqladmin"
+  default["mysqlx"]["mysql_bin"]               = "/usr/local/bin/mysql"
 end

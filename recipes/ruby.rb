@@ -44,7 +44,7 @@ if loaded_recipes.include?("mysqlx::percona_repo")
   end
 end
 
-node["mysql"]["client"]["packages"].each do |name|
+node["mysqlx"]["client"]["packages"].each do |name|
   resources("package[#{name}]").run_action(:install)
 end
 

@@ -23,26 +23,26 @@
 
 case node["platform_family"]
 when "rhel", "fedora"
-  default["mysql"]["client"]["packages"] = %w[mysql mysql-devel]
+  default["mysqlx"]["client"]["packages"] = %w[mysql mysql-devel]
 when "suse"
-  default["mysql"]["client"]["packages"] =
+  default["mysqlx"]["client"]["packages"] =
     %w[mysql-community-server-client libmysqlclient-devel]
 when "debian"
-  default["mysql"]["client"]["packages"] = %w[mysql-client libmysqlclient-dev]
+  default["mysqlx"]["client"]["packages"] = %w[mysql-client libmysqlclient-dev]
 when "freebsd"
-  default["mysql"]["client"]["packages"] = %w[mysql55-client]
+  default["mysqlx"]["client"]["packages"] = %w[mysql55-client]
 when "windows"
-  default["mysql"]["client"]["version"] = "6.0.2"
-  default["mysql"]["client"]["arch"] = "win32"
-  default["mysql"]["client"]["package_file"] = format(
+  default["mysqlx"]["client"]["version"] = "6.0.2"
+  default["mysqlx"]["client"]["arch"] = "win32"
+  default["mysqlx"]["client"]["package_file"] = format(
     "mysql-connector-c-%<version>s-%<arch>s.msi",
-    version: node["mysql"]["client"]["version"],
-    arch: node["mysql"]["client"]["arch"],
+    version: node["mysqlx"]["client"]["version"],
+    arch: node["mysqlx"]["client"]["arch"],
   )
-  default["mysql"]["client"]["url"] = <<-URL
+  default["mysqlx"]["client"]["url"] = <<-URL
     http://www.mysql.com/get/Downloads/Connector-C/#{mysql['client']['package_file']}/from/http://mysql.mirrors.pair.com/
   URL
-  default["mysql"]["client"]["packages"] = [
+  default["mysqlx"]["client"]["packages"] = [
     "MySQL Connector C #{mysql['client']['version']}",
   ]
   program_dir = if node["kernel"]["machine"] == "x86_64"
@@ -50,19 +50,19 @@ when "windows"
                 else
                   "Program Files (x86)"
                 end
-  default["mysql"]["client"]["basedir"] = File.join(
+  default["mysqlx"]["client"]["basedir"] = File.join(
     ENV["SYSTEMDRIVE"],
     program_dir,
     "MySQL",
-    node["mysql"]["client"]["packages"].first,
+    node["mysqlx"]["client"]["packages"].first,
   )
-  default["mysql"]["client"]["lib_dir"] =
-    File.join(node["mysql"]["client"]["basedir"], "lib/opt")
-  default["mysql"]["client"]["bin_dir"] =
-    File.join(node["mysql"]["client"]["basedir"], "bin")
-  default["mysql"]["client"]["ruby_dir"] = RbConfig::CONFIG["bindir"]
+  default["mysqlx"]["client"]["lib_dir"] =
+    File.join(node["mysqlx"]["client"]["basedir"], "lib/opt")
+  default["mysqlx"]["client"]["bin_dir"] =
+    File.join(node["mysqlx"]["client"]["basedir"], "bin")
+  default["mysqlx"]["client"]["ruby_dir"] = RbConfig::CONFIG["bindir"]
 when "mac_os_x"
-  default["mysql"]["client"]["packages"] = %w[mysql-connector-c]
+  default["mysqlx"]["client"]["packages"] = %w[mysql-connector-c]
 else
-  default["mysql"]["client"]["packages"] = %w[mysql-client libmysqlclient-dev]
+  default["mysqlx"]["client"]["packages"] = %w[mysql-client libmysqlclient-dev]
 end

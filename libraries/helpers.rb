@@ -27,18 +27,18 @@ module Freistil
       module Helpers
         def assign_root_password_cmd
           "/usr/bin/mysqladmin -u root " \
-            "password #{node['mysql']['server_root_password']}"
+            "password #{node['mysqlx']['server_root_password']}"
         end
 
         def grants_path
-          node["mysql"]["server"]["grants_path"]
+          node["mysqlx"]["server"]["grants_path"]
         end
 
         def install_grants_cmd
-          password_arg = if node["mysql"]["server_root_password"].empty?
+          password_arg = if node["mysqlx"]["server_root_password"].empty?
                            ""
                          else
-                           "-p#{node['mysql']['server_root_password']}"
+                           "-p#{node['mysqlx']['server_root_password']}"
                          end
           "/usr/bin/mysql -u root #{password_arg} < #{grants_path}"
         end

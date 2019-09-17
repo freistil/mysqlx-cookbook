@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-node["mysql"]["server"]["packages"].each do |name|
+node["mysqlx"]["server"]["packages"].each do |name|
   package name do
     action :install
   end
 end
 
-node["mysql"]["server"]["directories"].each do |_key, value|
+node["mysqlx"]["server"]["directories"].each do |_key, value|
   directory value do
     owner     "mysql"
     group     "mysql"
@@ -16,7 +16,7 @@ node["mysql"]["server"]["directories"].each do |_key, value|
   end
 end
 
-directory node["mysql"]["data_dir"] do
+directory node["mysqlx"]["data_dir"] do
   owner     "mysql"
   group     "mysql"
   action    :create
@@ -33,7 +33,7 @@ template "initial-my.cnf" do
 end
 
 service "mysql-start" do
-  service_name node["mysql"]["server"]["service_name"]
+  service_name node["mysqlx"]["server"]["service_name"]
   action :nothing
 end
 
@@ -76,7 +76,7 @@ template "final-my.cnf" do
 end
 
 service "mysql" do
-  service_name node["mysql"]["server"]["service_name"]
+  service_name node["mysqlx"]["server"]["service_name"]
   supports     status: true, restart: true, reload: true
   action       %i[enable start]
 end

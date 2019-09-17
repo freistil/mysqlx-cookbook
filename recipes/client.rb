@@ -23,17 +23,17 @@
 
 case node["platform"]
 when "windows"
-  package_file = node["mysql"]["client"]["package_file"]
+  package_file = node["mysqlx"]["client"]["package_file"]
   remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
-    source node["mysql"]["client"]["url"]
+    source node["mysqlx"]["client"]["url"]
     not_if { File.exist? "#{Chef::Config[:file_cache_path]}/#{package_file}" }
   end
 
-  windows_package node["mysql"]["client"]["packages"].first do
+  windows_package node["mysqlx"]["client"]["packages"].first do
     source "#{Chef::Config[:file_cache_path]}/#{package_file}"
   end
-  ENV["PATH"] += ";#{node['mysql']['client']['bin_dir']}"
-  windows_path node["mysql"]["client"]["bin_dir"] do
+  ENV["PATH"] += ";#{node['mysqlx']['client']['bin_dir']}"
+  windows_path node["mysqlx"]["client"]["bin_dir"] do
     action :add
   end
   def package(*args, &blk)
@@ -43,7 +43,7 @@ when "mac_os_x"
   include_recipe "homebrew::default"
 end
 
-node["mysql"]["client"]["packages"].each do |name|
+node["mysqlx"]["client"]["packages"].each do |name|
   package name
 end
 
@@ -52,14 +52,14 @@ if platform_family?("windows")
     block do
       require "fileutils"
       libmysql_dll = File.join(
-        node["mysql"]["client"]["lib_dir"],
+        node["mysqlx"]["client"]["lib_dir"],
         "libmysql.dll",
       )
-      FileUtils.cp libmysql_dll, node["mysql"]["client"]["ruby_dir"]
+      FileUtils.cp libmysql_dll, node["mysqlx"]["client"]["ruby_dir"]
     end
     not_if do
       File.exist?(
-        File.join(node["mysql"]["client"]["ruby_dir"], "libmysql.dll"),
+        File.join(node["mysqlx"]["client"]["ruby_dir"], "libmysql.dll"),
       )
     end
   end

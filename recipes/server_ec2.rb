@@ -19,25 +19,25 @@
 # limitations under the License.
 #
 
-if node.attribute?("ec2") && !FileTest.directory?(node["mysql"]["ec2_path"])
+if node.attribute?("ec2") && !FileTest.directory?(node["mysqlx"]["ec2_path"])
   service "mysql" do
     action :stop
   end
 
   execute "install-mysql" do
-    command "mv #{node['mysql']['data_dir']} #{node['mysql']['ec2_path']}"
-    not_if { FileTest.directory?(node["mysql"]["ec2_path"]) }
+    command "mv #{node['mysqlx']['data_dir']} #{node['mysqlx']['ec2_path']}"
+    not_if { FileTest.directory?(node["mysqlx"]["ec2_path"]) }
   end
 
-  [node["mysql"]["ec2_path"], node["mysql"]["data_dir"]].each do |dir|
+  [node["mysqlx"]["ec2_path"], node["mysqlx"]["data_dir"]].each do |dir|
     directory dir do
       owner "mysql"
       group "mysql"
     end
   end
 
-  mount node["mysql"]["data_dir"] do
-    device   node["mysql"]["ec2_path"]
+  mount node["mysqlx"]["data_dir"] do
+    device   node["mysqlx"]["ec2_path"]
     fstype  "none"
     options "bind,rw"
     action  %i[mount enable]

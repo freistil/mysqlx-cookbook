@@ -27,7 +27,7 @@ if Chef::Config[:solo]
     server_debian_password
     server_root_password
     server_repl_password
-  ].reject { |attr| node["mysql"].key?(attr) }
+  ].reject { |attr| node["mysqlx"].key?(attr) }
 
   unless missing_attrs.empty?
     Chef::Application.fatal! "You must set #{missing_attrs.join(', ')} " \
@@ -35,9 +35,9 @@ if Chef::Config[:solo]
     "https://github.com/opscode-cookbooks/mysql#chef-solo-note"
   end
 else
-  node.normal_unless["mysql"]["server_debian_password"] = secure_password
-  node.normal_unless["mysql"]["server_root_password"]   = secure_password
-  node.normal_unless["mysql"]["server_repl_password"]   = secure_password
+  node.normal_unless["mysqlx"]["server_debian_password"] = secure_password
+  node.normal_unless["mysqlx"]["server_root_password"]   = secure_password
+  node.normal_unless["mysqlx"]["server_repl_password"]   = secure_password
 end
 
 case node["platform_family"]
