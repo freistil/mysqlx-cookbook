@@ -25,7 +25,7 @@ GRAPH
     database (>= 0.0.0)
     mysqlx (>= 0.0.0)
     yum (~> 5.0)
-  mysqlx (5.0.1)
+  mysqlx (6.0.0)
     build-essential (~> 8.1)
     homebrew (~> 5.0)
     openssl (~> 1.1)

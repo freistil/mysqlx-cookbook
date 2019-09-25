@@ -46,19 +46,20 @@ default["mysqlx"]["allow_remote_root"]               = false
 default["mysqlx"]["remove_anonymous_users"]          = false
 default["mysqlx"]["remove_test_database"]            = false
 default["mysqlx"]["root_network_acl"]                = nil
-default["mysqlx"]["tunable"]["character-set-server"] = "utf8"
-default["mysqlx"]["tunable"]["collation-server"]     = "utf8_general_ci"
-default["mysqlx"]["tunable"]["lower_case_table_names"] = nil
+default["mysqlx"]["tunable"]["character_set_server"] = "utf8"
+default["mysqlx"]["tunable"]["collation_server"]     = "utf8_general_ci"
+default["mysqlx"]["tunable"]["lower_case_table_names"] = 1
 default["mysqlx"]["tunable"]["back_log"] = "128"
 default["mysqlx"]["tunable"]["key_buffer_size"]           = "256M"
 default["mysqlx"]["tunable"]["myisam_sort_buffer_size"]   = "8M"
-default["mysqlx"]["tunable"]["myisam_max_sort_file_size"] = "2147483648"
+default["mysqlx"]["tunable"]["myisam_max_sort_file_size"] =
+  "9223372036854775807"
 default["mysqlx"]["tunable"]["myisam_repair_threads"]     = "1"
-default["mysqlx"]["tunable"]["myisam-recover"]            = "BACKUP"
+default["mysqlx"]["tunable"]["myisam_recover_options"] = "OFF"
 default["mysqlx"]["tunable"]["max_allowed_packet"]   = "16M"
 default["mysqlx"]["tunable"]["max_connections"]      = "800"
 default["mysqlx"]["tunable"]["max_connect_errors"]   = "10"
-default["mysqlx"]["tunable"]["concurrent_insert"]    = "2"
+default["mysqlx"]["tunable"]["concurrent_insert"]    = "ALWAYS"
 default["mysqlx"]["tunable"]["connect_timeout"]      = "10"
 default["mysqlx"]["tunable"]["tmp_table_size"]       = "32M"
 default["mysqlx"]["tunable"]["max_heap_table_size"] =
@@ -71,14 +72,13 @@ default["mysqlx"]["tunable"]["table_cache"]          = "128" # deprecated
 default["mysqlx"]["tunable"]["table_open_cache"] =
   node["mysqlx"]["tunable"]["table_cache"]
 default["mysqlx"]["tunable"]["thread_cache_size"]    = 8
-default["mysqlx"]["tunable"]["thread_concurrency"]   = 10
 default["mysqlx"]["tunable"]["thread_stack"]         = "256K"
 default["mysqlx"]["tunable"]["sort_buffer_size"]     = "2M"
-default["mysqlx"]["tunable"]["read_buffer_size"]     = "128k"
-default["mysqlx"]["tunable"]["read_rnd_buffer_size"] = "256k"
-default["mysqlx"]["tunable"]["join_buffer_size"]     = "128k"
+default["mysqlx"]["tunable"]["read_buffer_size"]     = "128K"
+default["mysqlx"]["tunable"]["read_rnd_buffer_size"] = "256K"
+default["mysqlx"]["tunable"]["join_buffer_size"]     = "128K"
 default["mysqlx"]["tunable"]["wait_timeout"]         = "180"
-default["mysqlx"]["tunable"]["open-files-limit"]     = "1024"
+default["mysqlx"]["tunable"]["open_files_limit"]     = "4096"
 
 default["mysqlx"]["tunable"]["sql_mode"] = nil
 
@@ -108,13 +108,14 @@ default["mysqlx"]["tunable"]["read_only"]                       = false
 
 default["mysqlx"]["tunable"]["log_error"]                       = nil
 default["mysqlx"]["tunable"]["log_warnings"]                    = false
-default["mysqlx"]["tunable"]["log_queries_not_using_index"]     = true
+default["mysqlx"]["tunable"]["slow_query_log"]                  = true
+default["mysqlx"]["tunable"]["log_queries_not_using_indexes"]   = true
 default["mysqlx"]["tunable"]["log_bin_trust_function_creators"] = false
 
+default["mysqlx"]["tunable"]["innodb_file_format"] = "Barracuda"
 default["mysqlx"]["tunable"]["innodb_log_file_size"]            = "5M"
 default["mysqlx"]["tunable"]["innodb_buffer_pool_size"]         = "128M"
 default["mysqlx"]["tunable"]["innodb_buffer_pool_instances"]    = "4"
-default["mysqlx"]["tunable"]["innodb_additional_mem_pool_size"] = "8M"
 default["mysqlx"]["tunable"]["innodb_data_file_path"] = "ibdata1:10M:autoextend"
 default["mysqlx"]["tunable"]["innodb_flush_method"]             = false
 default["mysqlx"]["tunable"]["innodb_log_buffer_size"]          = "8M"
@@ -123,6 +124,7 @@ default["mysqlx"]["tunable"]["innodb_io_capacity"]              = "200"
 default["mysqlx"]["tunable"]["innodb_file_per_table"]           = true
 default["mysqlx"]["tunable"]["innodb_lock_wait_timeout"]        = "60"
 default["mysqlx"]["tunable"]["innodb_rollback_on_timeout"]      = false
+default["mysqlx"]["tunable"]["innodb_large_prefix"] = "ON"
 if node["cpu"].nil? || node["cpu"]["total"].nil?
   default["mysqlx"]["tunable"]["innodb_thread_concurrency"]       = "8"
   default["mysqlx"]["tunable"]["innodb_commit_concurrency"]       = "8"
@@ -135,10 +137,10 @@ else
   default["mysqlx"]["tunable"]["innodb_read_io_threads"] =
     (node["cpu"]["total"].to_i * 2).to_s
 end
-default["mysqlx"]["tunable"]["innodb_flush_log_at_trx_commit"]  = "1"
-default["mysqlx"]["tunable"]["innodb_support_xa"]               = true
-default["mysqlx"]["tunable"]["innodb_table_locks"]              = true
-default["mysqlx"]["tunable"]["skip-innodb-doublewrite"]         = false
+default["mysqlx"]["tunable"]["innodb_flush_log_at_trx_commit"] = "1"
+default["mysqlx"]["tunable"]["innodb_support_xa"] = "ON"
+default["mysqlx"]["tunable"]["innodb_table_locks"] = "ON"
+default["mysqlx"]["tunable"]["skip-innodb-doublewrite"] = false
 
 default["mysqlx"]["tunable"]["transaction-isolation"] = nil
 
@@ -152,7 +154,6 @@ default["mysqlx"]["tunable"]["binlog_cache_size"]    = "32K"
 
 default["mysqlx"]["tmpdir"] = ["/tmp"]
 
-# default["mysqlx"]["log_dir"] = node["mysqlx"]["data_dir"]
 default["mysqlx"]["log_files_in_group"] = false
 default["mysqlx"]["innodb_status_file"] = false
 

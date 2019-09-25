@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the mysqlx Chef cookbook.
 
+## v6.1.0
+
+* [CHANGED] Extend and test configuration settings
+
 ## v6.0.0
 
 * [CHANGED] Switch attribute namespace to `mysqlx`.

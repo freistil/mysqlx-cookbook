@@ -94,6 +94,26 @@ service "apparmor-mysql" do
   supports reload: true
 end
 
+execute "mysql-reload-systemd" do
+  command "systemctl daemon-reload"
+  action :nothing
+end
+
+directory "/etc/systemd/system/mysql.service.d" do
+  action :create
+  owner "root"
+  group "root"
+  mode 0o0755
+end
+
+template "/etc/systemd/system/mysql.service.d/chef.conf" do
+  source "mysql.service.erb"
+  owner "root"
+  group "root"
+  mode 0o0644
+  notifies :run, "execute[mysql-reload-systemd]", :immediately
+end
+
 %w[mysql.cnf mysqldump.cnf].each do |conf|
   template "/etc/mysql/conf.d/#{conf}" do
     source "#{conf}.erb"

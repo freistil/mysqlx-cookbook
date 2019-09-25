@@ -34,20 +34,12 @@ mysql_conn_args = format(
 
 execute "create-sample-data" do
   command %(mysql #{mysql_conn_args} #{node['mysql_test']['database']} <<EOF
+DROP TABLE IF EXISTS tv_chef;
 CREATE TABLE tv_chef (name VARCHAR(32) PRIMARY KEY);
 INSERT INTO tv_chef (name) VALUES ("Alison Holst");
 INSERT INTO tv_chef (name) VALUES ("Nigella Lawson");
 INSERT INTO tv_chef (name) VALUES ("Julia Child");
 EOF
-  )
-  not_if format(
-    "echo %<sql>s | " \
-    "mysql %<conn_args>s --skip-column-names %<database>s | " \
-    "grep '%<result>s'",
-    sql: "SELECT count(name) FROM tv_chef",
-    conn_args: mysql_conn_args,
-    database: node["mysql_test"]["database"],
-    result: "^3$",
   )
 end
 

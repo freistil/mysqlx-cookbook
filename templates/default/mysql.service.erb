@@ -1,0 +1,5 @@
+# MySQL systemd service drop-in
+# Maintained by Chef
+
+[Service]
+LimitNOFILE=<%= node["mysqlx"]["tunable"]["open_files_limit"] %>

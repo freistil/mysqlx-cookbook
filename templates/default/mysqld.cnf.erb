@@ -45,11 +45,9 @@ skip-name-resolve
 <%- end %>
 
 # Charset and Collation
-character-set-server = <%= node["mysqlx"]["tunable"]["character-set-server"] %>
-collation-server = <%= node["mysqlx"]["tunable"]["collation-server"] %>
-<%- if node["mysqlx"]["tunable"]["lower_case_table_names"] %>
+character_set_server = <%= node["mysqlx"]["tunable"]["character_set_server"] %>
+collation_server = <%= node["mysqlx"]["tunable"]["collation_server"] %>
 lower_case_table_names = <%= node["mysqlx"]["tunable"]["lower_case_table_names"] %>
-<%- end %>
 <%- if node["mysqlx"]["tunable"]["event_scheduler"] %>
 event_scheduler = <%= node["mysqlx"]["tunable"]["event_scheduler"] %>
 <%- end %>
@@ -95,7 +93,7 @@ table_open_cache        = <%= node["mysqlx"]["tunable"]["table_open_cache"] %>
 tmp_table_size          = <%= node["mysqlx"]["tunable"]["tmp_table_size"] %>
 max_heap_table_size     = <%= node["mysqlx"]["tunable"]["max_heap_table_size"] %>
 bulk_insert_buffer_size = <%= node["mysqlx"]["tunable"]["bulk_insert_buffer_size"] %>
-open-files-limit        = <%= node["mysqlx"]["tunable"]["open-files-limit"] %>
+open_files_limit        = <%= node["mysqlx"]["tunable"]["open_files_limit"] %>
 
 # Default Table Settings
 <%- if node["mysqlx"]["tunable"]["sql_mode"] %>
@@ -135,8 +133,8 @@ slow_query_log_file = <%= node["mysqlx"]["server"]["slow_query_log_file"] %>
 log_slow_queries    = <%= node["mysqlx"]["server"]["log_slow_queries"] %>
 <%- end %>
 
-long_query_time         = <%= node["mysqlx"]["tunable"]["long_query_time"] %>
-<%- if node["mysqlx"]["tunable"]["log_queries_not_using_index"] and node["mysqlx"]["tunable"]["slow_query_log"]  %>
+long_query_time = <%= node["mysqlx"]["tunable"]["long_query_time"] %>
+<%- if node["mysqlx"]["tunable"]["log_queries_not_using_indexes"] and node["mysqlx"]["tunable"]["slow_query_log"]  %>
 log-queries-not-using-indexes
 <%- end %>
 #
@@ -209,12 +207,10 @@ slave_compressed_protocol = <%= node["mysqlx"]["tunable"]["slave_compressed_prot
 # You might want to disable InnoDB to shrink the mysqld process by circa 100MB.
 #skip-innodb
 
-<%- if node["mysqlx"]["version"].to_f >= 5.5 %>
 innodb_write_io_threads         = <%= node["mysqlx"]["tunable"]["innodb_write_io_threads"] %>
 innodb_io_capacity              = <%= node["mysqlx"]["tunable"]["innodb_io_capacity"] %>
 innodb_read_io_threads          = <%= node["mysqlx"]["tunable"]["innodb_read_io_threads"] %>
 innodb_buffer_pool_instances    = <%= node["mysqlx"]["tunable"]["innodb_buffer_pool_instances"] %>
-<%- end %>
 
 ## InnoDB Plugin Independent Settings
 innodb_data_home_dir            = <%= node["mysqlx"]["data_dir"]  %>
@@ -229,14 +225,18 @@ innodb_status_file
 <%- if node["mysqlx"]["tunable"]["innodb_file_per_table"] %>
 innodb_file_per_table
 <%- end %>
+<%- if node["mysqlx"]["tunable"]["innodb_large_prefix"] %>
+innodb_large_prefix = ON
+<%- end %>
+innodb_file_format = <%= node["mysqlx"]["tunable"]["innodb_file_format"] %>
 innodb_table_locks              = <%= node["mysqlx"]["tunable"]["innodb_table_locks"] %>
 innodb_lock_wait_timeout        = <%= node["mysqlx"]["tunable"]["innodb_lock_wait_timeout"] %>
 <%- if node["mysqlx"]["tunable"]["innodb_rollback_on_timeout"] %>
 innodb_rollback_on_timeout
 <%- end %>
-innodb_thread_concurrency       = <%= node["mysqlx"]["tunable"]["innodb_thread_concurrency"] %>
 innodb_commit_concurrency       = <%= node["mysqlx"]["tunable"]["innodb_commit_concurrency"] %>
-innodb_support_xa               = <%= node["mysqlx"]["tunable"]["innodb_support_xa"] %>
+innodb_thread_concurrency       = <%= node["mysqlx"]["tunable"]["innodb_thread_concurrency"] %>
+innodb_support_xa = <%= node["mysqlx"]["tunable"]["innodb_support_xa"] %>
 <%- if node["mysqlx"]["tunable"]["skip-innodb-doublewrite"] %>
 skip-innodb-doublewrite
 <%- end %>
@@ -321,7 +321,7 @@ key_buffer                = <%= node["mysqlx"]["tunable"]["max_allowed_packet"] 
 myisam_sort_buffer_size   = <%= node["mysqlx"]["tunable"]["myisam_sort_buffer_size"] %>
 myisam_max_sort_file_size = <%= node["mysqlx"]["tunable"]["myisam_max_sort_file_size"] %>
 myisam_repair_threads     = <%= node["mysqlx"]["tunable"]["myisam_repair_threads"] %>
-myisam-recover            = <%= node["mysqlx"]["tunable"]["myisam-recover"] %>
+myisam-recover=<%= node["mysqlx"]["tunable"]["myisam_recover_options"] %>
 
 #
 # * NDB Cluster

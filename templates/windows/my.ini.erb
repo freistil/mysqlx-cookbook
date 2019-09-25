@@ -28,24 +28,19 @@ default-character-set = latin1
 port                      = 3306
 basedir                   = <%= node["mysqlx"]['windows']['basedir'] %>
 datadir                   = <%= node["mysqlx"]['windows']['data_dir'] %>
-character-set-server      = latin1
+character_set_server = <%= node["mysqlx"]["tunable"]["character_set_server"] %>
+collation_server = <%= node["mysqlx"]["tunable"]["collation_server"] %>
 default-storage-engine    = INNODB
 sql-mode                  = "STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
 <%- if node["mysqlx"]['tunable']['event_scheduler'] %>
 event_scheduler      = <%= node["mysqlx"]['tunable']['event_scheduler'] %>
 <%- end %>
-
-#
-# * Fine Tuning
-#
 thread_cache_size         = <%= node["mysqlx"]['tunable']['thread_cache_size'] %>
 max_connections           = <%= node["mysqlx"]['tunable']['max_connections'] %>
 table_cache               = <%= node["mysqlx"]['tunable']['table_cache'] %>
 query_cache_size          = <%= node["mysqlx"]['tunable']['query_cache_size'] %>
 tmp_table_size            = 5M
-myisam_max_sort_file_size = 100G
-myisam_sort_buffer_size   = 8M
 key_buffer_size           = <%= node["mysqlx"]['tunable']['key_buffer_size'] %>
 read_buffer_size          = <%= node["mysqlx"]['tunable']['read_buffer_size'] %>
 read_rnd_buffer_size      = <%= node["mysqlx"]['tunable']['read_rnd_buffer_size'] %>
@@ -53,19 +48,19 @@ join_buffer_size          = <%= node["mysqlx"]['tunable']['join_buffer_size'] %>
 sort_buffer_size          = <%= node["mysqlx"]['tunable']['sort_buffer_size'] %>
 max_allowed_packet        = <%= node["mysqlx"]['tunable']['max_allowed_packet'] %>
 
+slow_query_log            = <%= node["mysqlx"]['server']['slow_query_log'] %>
+long_query_time           = <%= node["mysqlx"]['tunable']['long_query_time'] %>
+<%- if node["mysqlx"]["tunable"]["log_queries_not_using_indexes"] and node["mysqlx"]["slow_query_log"]  %>
+log_queries_not_using_indexes
+<%- end %>
 
 #
-# Here you can see queries with especially long duration
-<%- if node["mysqlx"]['windows']['version'].to_f >= 5.5 %>
-slow_query_log            = <%= node["mysqlx"]['server']['slow_query_log'] %>
-<% else %>
-log_slow_queries          = <%= node["mysqlx"]['server']['slow_query_log'] %>
-<% end %>
+# MyISAM
+#
 
-long_query_time           = <%= node["mysqlx"]['tunable']['long_query_time'] %>
-<%- if node["mysqlx"]['tunable']['log_queries_not_using_index'] and node["mysqlx"]['slow_query_log']  %>
-log-queries-not-using-indexes
-<%- end %>
+myisam_max_sort_file_size = 100G
+myisam_sort_buffer_size   = 8M
+myisam-recover = <%= node["mysqlx"]["tunable"]["myisam_recover_options"] %>
 
 #
 # * InnoDB
@@ -74,11 +69,10 @@ log-queries-not-using-indexes
 # You might want to disable InnoDB to shrink the mysqld process by circa 100MB.
 #
 innodb_log_file_size            = <%= node["mysqlx"]['tunable']['innodb_log_file_size'] %>
-innodb_additional_mem_pool_size = <%= node["mysqlx"]['tunable']['innodb_additional_mem_pool_size'] %>
 innodb_flush_log_at_trx_commit  = 1
 innodb_log_buffer_size          = <%= node["mysqlx"]['tunable']['innodb_log_buffer_size'] %>
 innodb_buffer_pool_size         = <%= node["mysqlx"]['tunable']['innodb_buffer_pool_size'] %>
-innodb_thread_concurrency       = 8
+innodb_thread_concurrency       = <%= node["mysqlx"]["tunable"]["innodb_thread_concurrency"] %>
 
 <%- if node["mysqlx"]['tunable']['innodb_file_per_table'] %>
 innodb_file_per_table

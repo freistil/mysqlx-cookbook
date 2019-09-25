@@ -22,7 +22,19 @@ suites:
       - recipe[mysqlx::ruby]
   - name: server
     run_list:
+      - recipe[apt]
       - recipe[mysql_test::server]
+    attributes:
+      mysqlx:
+        tunable:
+          replicate_do_db: "tv_chef"
+          replicate_do_table: "tv_chef.tv_chef"
+          replicate_ignore_db: "mysql_test"
+          replicate_ignore_table: "tv_chef.test"
+          replicate_wild_do_table: "tv_chef.tv%"
+          replicate_wild_ignore_table: "tv_chef.test%"
+          skip_slave_start: true
+          open_files_limit: 102400
   - name: server-datadir
     run_list:
       - recipe[mysql_test::server]
