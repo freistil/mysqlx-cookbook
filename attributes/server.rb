@@ -85,10 +85,10 @@ default["mysqlx"]["tunable"]["sql_mode"] = nil
 default["mysqlx"]["tunable"]["skip-character-set-client-handshake"] = false
 default["mysqlx"]["tunable"]["skip-name-resolve"]                   = false
 
-default["mysqlx"]["tunable"]["slave_compressed_protocol"]       = 0
+default["mysqlx"]["tunable"]["slave_compressed_protocol"] = 0
 
-default["mysqlx"]["tunable"]["server_id"]                       = nil
-default["mysqlx"]["tunable"]["log_bin"]                         = nil
+default["mysqlx"]["tunable"]["server_id"] = 0
+default["mysqlx"]["tunable"]["log_bin"] = false
 default["mysqlx"]["tunable"]["log_bin_trust_function_creators"] = false
 
 default["mysqlx"]["tunable"]["relay_log"]                       = nil

@@ -27,6 +27,7 @@ suites:
     attributes:
       mysqlx:
         tunable:
+          log_bin: true
           replicate_do_db: "tv_chef"
           replicate_do_table: "tv_chef.tv_chef"
           replicate_ignore_db: "mysql_test"

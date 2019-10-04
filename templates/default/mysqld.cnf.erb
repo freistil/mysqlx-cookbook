@@ -141,13 +141,11 @@ log-queries-not-using-indexes
 # The following can be used as easy to replay backup logs or for replication.
 # note: if you are setting up a replication slave, see README.Debian about
 #       other settings you may need to change.
-<%- if node["mysqlx"]["tunable"]["server_id"] %>
 server-id = <%= node["mysqlx"]["tunable"]["server_id"] %>
-<% end %>
 <%- if node["mysqlx"]["tunable"]["log_bin"] %>
-log_bin 		= <%= node["mysqlx"]["tunable"]["log_bin"] %>
-binlog_format           = <%= node["mysqlx"]["tunable"]["binlog_format"] %>
-log_slave_updates       = <%= node["mysqlx"]["tunable"]["log_slave_updates"] %>
+log_bin = ON
+binlog_format = <%= node["mysqlx"]["tunable"]["binlog_format"] %>
+log_slave_updates = <%= node["mysqlx"]["tunable"]["log_slave_updates"] %>
 <%- end %>
 <%- if node["mysqlx"]["tunable"]["log_bin_trust_function_creators"] %>
 log_bin_trust_function_creators

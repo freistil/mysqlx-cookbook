@@ -9,7 +9,7 @@ long_description  IO.read(File.join(File.dirname(__FILE__), "README.md"))
 source_url "https://github.com/freistil/mysqlx-cookbook"
 issues_url "https://github.com/freistil/mysqlx-cookbook/issues"
 
-version "6.1.0"
+version "6.1.1"
 
 chef_version ">= 13.12"
 

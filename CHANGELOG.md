@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the mysqlx Chef cookbook.
 
+## v6.1.1
+
+* [FIXED] Set configuration values required for setting up binlog writing.
+
 ## v6.1.0
 
 * [CHANGED] Extend and test configuration settings
