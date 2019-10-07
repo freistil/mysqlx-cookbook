@@ -25,6 +25,8 @@ suites:
       - recipe[apt]
       - recipe[mysql_test::server]
     attributes:
+      apt:
+        compile_time_update: true
       mysqlx:
         tunable:
           log_bin: true

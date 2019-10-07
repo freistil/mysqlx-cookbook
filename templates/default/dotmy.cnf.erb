@@ -1,0 +1,11 @@
+[client]
+# The following password will be sent to all standard MySQL clients
+user=debian-sys-maint
+password="<%= node["mysqlx"]["server_debian_password"] %>"
+
+[mysql]
+no-auto-rehash
+connect_timeout=2
+
+[mysqlhotcopy]
+interactive-timeout

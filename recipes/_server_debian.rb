@@ -145,6 +145,13 @@ template "/etc/mysql/my.cnf" do
   notifies :restart, "service[mysql]"
 end
 
+template "/root/.my.cnf" do
+  source "dotmy.cnf.erb"
+  owner "root"
+  group "root"
+  mode 0o600
+end
+
 bash "move mysql data to datadir" do
   user "root"
   code <<-MOVE_AND_RESTART

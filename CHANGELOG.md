@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the mysqlx Chef cookbook.
 
+## HEAD
+
+* [NEW] Create /root/.my.cnf containing usable settings for admin tasks.
+
 ## v6.1.1
 
 * [FIXED] Set configuration values required for setting up binlog writing.
