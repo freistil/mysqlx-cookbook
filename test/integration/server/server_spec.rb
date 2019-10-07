@@ -22,5 +22,5 @@ describe file("/root/.my.cnf") do
   its("owner") { should eq "root" }
   its("group") { should eq "root" }
   its("mode") { should eq 0o600 }
-  its("content") { should match(%r{password="ilikerandompasswords"}) }
+  its("content") { should match("password=\"ilikerandompasswords\"") }
 end

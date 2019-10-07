@@ -16,10 +16,18 @@ platforms:
 suites:
   - name: client
     run_list:
+      - recipe[apt]
       - recipe[mysql_test::client]
+    attributes:
+      apt:
+        compile_time_update: true
   - name: ruby
     run_list:
+      - recipe[apt]
       - recipe[mysqlx::ruby]
+    attributes:
+      apt:
+        compile_time_update: true
   - name: server
     run_list:
       - recipe[apt]
@@ -40,7 +48,10 @@ suites:
           open_files_limit: 102400
   - name: server-datadir
     run_list:
+      - recipe[apt]
       - recipe[mysql_test::server]
     attributes:
+      apt:
+        compile_time_update: true
       mysqlx:
         data_dir: "/data/mysql"
