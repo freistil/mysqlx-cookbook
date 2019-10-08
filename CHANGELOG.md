@@ -2,9 +2,16 @@
 
 This file is used to list changes made in each version of the mysqlx Chef cookbook.
 
-## v6.2.0 2019-10-07
+## HEAD
 
 * [NEW] Create /root/.my.cnf containing usable settings for admin tasks.
+
+## v6.2.0
+
+* [NEW] Configuration changes now don't trigger a service restart directly
+  but run a config change handler script that can be replaced with any
+  functionality required. For example, instead of restarting an active
+  database, you could simply notify the ops team that a restart is required.
 
 ## v6.1.1
 

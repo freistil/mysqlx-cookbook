@@ -14,4 +14,7 @@ if node["platform_family"] == "freebsd"
   default["mysqlx"]["server"]["pid_file"] = "/var/run/mysqld/mysqld.pid"
   default["mysqlx"]["server"]["old_passwords"] = 0
   default["mysqlx"]["server"]["grants_path"] = "/var/db/mysql/grants.sql"
+  default["mysqlx"]["server"]["config_change_handler_source"] =
+    "config_change_handler.erb"
+  default["mysqlx"]["server"]["config_change_handler_cookbook"] = "mysqlx"
 end
