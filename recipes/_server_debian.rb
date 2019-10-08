@@ -143,7 +143,7 @@ end
     owner "root"
     group "root"
     mode 0o644
-    notifies :restart, "service[mysql]"
+    notifies :run, "execute[config_change_handler]"
   end
 end
 
