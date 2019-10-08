@@ -114,13 +114,26 @@ template "/etc/systemd/system/mysql.service.d/chef.conf" do
   notifies :run, "execute[mysql-reload-systemd]", :immediately
 end
 
+template "/etc/mysql/config_change_handler" do
+  source node["mysqlx"]["config_change_handler_source"]
+  cookbook node["mysqlx"]["config_change_handler_cookbook"]
+  owner "root"
+  group "root"
+  mode 0o700
+end
+
+execute "config_change_handler" do
+  action :nothing
+  command "/etc/mysql/config_change_handler"
+end
+
 %w[mysql.cnf mysqldump.cnf].each do |conf|
   template "/etc/mysql/conf.d/#{conf}" do
     source "#{conf}.erb"
     owner "root"
     group "root"
     mode 0o644
-    notifies :restart, "service[mysql]"
+    notifies :run, "execute[config_change_handler]"
   end
 end
 
