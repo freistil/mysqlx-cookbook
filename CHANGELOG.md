@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the mysqlx Chef cookbook.
 
-## HEAD
+## v6.3.0 2019-10-09
 
 * [NEW] Create /root/.my.cnf containing usable settings for admin tasks.
 
