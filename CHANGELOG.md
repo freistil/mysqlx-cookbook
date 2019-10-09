@@ -6,6 +6,11 @@ This file is used to list changes made in each version of the mysqlx Chef cookbo
 
 * [NEW] Create /root/.my.cnf containing usable settings for admin tasks.
 
+## v6.2.1
+
+* [FIXED] The change handler script didn't get executed for every
+  configuration file changed.
+
 ## v6.2.0
 
 * [NEW] Configuration changes now don't trigger a service restart directly
