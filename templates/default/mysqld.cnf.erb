@@ -40,9 +40,7 @@ basedir         = <%= node["mysqlx"]["server"]["basedir"] %>
 datadir         = <%= node["mysqlx"]["data_dir"] %>
 tmpdir          = <%= node["mysqlx"]["server"]["tmpdir"].join(":") %>
 skip-external-locking
-<%- if node["mysqlx"]["tunable"]["skip-name-resolve"] %>
-skip-name-resolve
-<%- end %>
+skip-name-resolve = <%= node["mysqlx"]["tunable"]["skip-name-resolve"] %>
 
 # Charset and Collation
 character_set_server = <%= node["mysqlx"]["tunable"]["character_set_server"] %>
@@ -51,9 +49,7 @@ lower_case_table_names = <%= node["mysqlx"]["tunable"]["lower_case_table_names"]
 <%- if node["mysqlx"]["tunable"]["event_scheduler"] %>
 event_scheduler = <%= node["mysqlx"]["tunable"]["event_scheduler"] %>
 <%- end %>
-<%- if node["mysqlx"]["tunable"]["skip-character-set-client-handshake"] %>
-skip-character-set-client-handshake
-<%- end %>
+skip-character-set-client-handshake = <%= node["mysqlx"]["tunable"]["skip-character-set-client-handshake"] %>
 <%- if (node["mysqlx"]["tunable"]["lc_messages_dir"] && node["mysqlx"]["tunable"]["lc_messages"]) %>
 lc_messages_dir	    = <%= node["mysqlx"]["lc_messages_dir"] %>
 lc_messages	    = <%= node["mysqlx"]["lc_messages"] %>
@@ -77,8 +73,8 @@ read_buffer_size        = <%= node["mysqlx"]["tunable"]["read_buffer_size"] %>
 read_rnd_buffer_size    = <%= node["mysqlx"]["tunable"]["read_rnd_buffer_size"] %>
 join_buffer_size        = <%= node["mysqlx"]["tunable"]["join_buffer_size"] %>
 
-auto-increment-increment = <%= node["mysqlx"]["auto-increment-increment"] %>
-auto-increment-offset    = <%= node["mysqlx"]["auto-increment-offset"] %>
+auto_increment_increment = <%= node["mysqlx"]["auto_increment_increment"] %>
+auto_increment_offset    = <%= node["mysqlx"]["auto_increment_offset"] %>
 
 max_connections         = <%= node["mysqlx"]["tunable"]["max_connections"] %>
 max_connect_errors      = <%= node["mysqlx"]["tunable"]["max_connect_errors"] %>
@@ -142,8 +138,8 @@ log-queries-not-using-indexes
 # note: if you are setting up a replication slave, see README.Debian about
 #       other settings you may need to change.
 server-id = <%= node["mysqlx"]["tunable"]["server_id"] %>
-<%- if node["mysqlx"]["tunable"]["log_bin"] %>
-log_bin = ON
+<%- unless node["mysqlx"]["tunable"]["log_bin"].nil? %>
+log_bin = <%= node["mysqlx"]["tunable"]["log_bin"] %>
 binlog_format = <%= node["mysqlx"]["tunable"]["binlog_format"] %>
 log_slave_updates = <%= node["mysqlx"]["tunable"]["log_slave_updates"] %>
 <%- end %>
@@ -153,8 +149,6 @@ log_bin_trust_function_creators
 expire_logs_days        = <%= node["mysqlx"]["tunable"]["expire_logs_days"] %>
 max_binlog_size         = <%= node["mysqlx"]["tunable"]["max_binlog_size"] %>
 binlog_cache_size       = <%= node["mysqlx"]["tunable"]["binlog_cache_size"] %>
-#binlog_do_db           = include_database_name
-#binlog_ignore_db       = include_database_name
 <%- if node["mysqlx"]["tunable"]["relay_log"] %>
 relay_log               = <%= node["mysqlx"]["tunable"]["relay_log"] %>
 <%- end %>
@@ -181,11 +175,8 @@ replicate_wild_do_table     = <%= node["mysqlx"]["tunable"]["replicate_wild_do_t
 replicate_wild_ignore_table = <%= node["mysqlx"]["tunable"]["replicate_wild_ignore_table"] %>
 <%- end %>
 
-
 sync_binlog             = <%= node["mysqlx"]["tunable"]["sync_binlog"] %>
-<%- if node["mysqlx"]["tunable"]["skip_slave_start"] %>
-skip_slave_start
-<%- end %>
+skip_slave_start = <%= node["mysqlx"]["tunable"]["skip_slave_start"] %>
 <%- if node["mysqlx"]["tunable"]["read_only"] %>
 read_only = 1
 <%- end %>
@@ -227,8 +218,8 @@ innodb_file_per_table
 innodb_large_prefix = ON
 <%- end %>
 innodb_file_format = <%= node["mysqlx"]["tunable"]["innodb_file_format"] %>
-innodb_table_locks              = <%= node["mysqlx"]["tunable"]["innodb_table_locks"] %>
-innodb_lock_wait_timeout        = <%= node["mysqlx"]["tunable"]["innodb_lock_wait_timeout"] %>
+innodb_table_locks = <%= node["mysqlx"]["tunable"]["innodb_table_locks"] %>
+innodb_lock_wait_timeout = <%= node["mysqlx"]["tunable"]["innodb_lock_wait_timeout"] %>
 <%- if node["mysqlx"]["tunable"]["innodb_rollback_on_timeout"] %>
 innodb_rollback_on_timeout
 <%- end %>

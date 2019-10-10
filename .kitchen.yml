@@ -37,14 +37,13 @@ suites:
         compile_time_update: true
       mysqlx:
         tunable:
-          log_bin: true
+          log_bin: "mysql-bin"
           replicate_do_db: "tv_chef"
           replicate_do_table: "tv_chef.tv_chef"
           replicate_ignore_db: "mysql_test"
           replicate_ignore_table: "tv_chef.test"
           replicate_wild_do_table: "tv_chef.tv%"
           replicate_wild_ignore_table: "tv_chef.test%"
-          skip_slave_start: true
           open_files_limit: 102400
   - name: server-datadir
     run_list:

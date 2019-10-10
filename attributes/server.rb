@@ -38,14 +38,7 @@ if attribute?("ec2")
   default["mysqlx"]["ebs_vol_size"] = 50
 end
 
-# actual configs start here
-default["mysqlx"]["auto-increment-increment"]        = 1
-default["mysqlx"]["auto-increment-offset"]           = 1
-
-default["mysqlx"]["allow_remote_root"]               = false
-default["mysqlx"]["remove_anonymous_users"]          = false
-default["mysqlx"]["remove_test_database"]            = false
-default["mysqlx"]["root_network_acl"]                = nil
+# Commonly customized settings
 default["mysqlx"]["tunable"]["character_set_server"] = "utf8"
 default["mysqlx"]["tunable"]["collation_server"]     = "utf8_general_ci"
 default["mysqlx"]["tunable"]["lower_case_table_names"] = 1
@@ -79,39 +72,30 @@ default["mysqlx"]["tunable"]["read_rnd_buffer_size"] = "256K"
 default["mysqlx"]["tunable"]["join_buffer_size"]     = "128K"
 default["mysqlx"]["tunable"]["wait_timeout"]         = "180"
 default["mysqlx"]["tunable"]["open_files_limit"]     = "4096"
-
 default["mysqlx"]["tunable"]["sql_mode"] = nil
-
-default["mysqlx"]["tunable"]["skip-character-set-client-handshake"] = false
-default["mysqlx"]["tunable"]["skip-name-resolve"]                   = false
-
+default["mysqlx"]["tunable"]["skip-character-set-client-handshake"] = "OFF"
+default["mysqlx"]["tunable"]["skip-name-resolve"] = "OFF"
 default["mysqlx"]["tunable"]["slave_compressed_protocol"] = 0
-
 default["mysqlx"]["tunable"]["server_id"] = 0
-default["mysqlx"]["tunable"]["log_bin"] = false
+default["mysqlx"]["tunable"]["log_bin"] = nil
 default["mysqlx"]["tunable"]["log_bin_trust_function_creators"] = false
-
 default["mysqlx"]["tunable"]["relay_log"]                       = nil
 default["mysqlx"]["tunable"]["relay_log_index"]                 = nil
 default["mysqlx"]["tunable"]["log_slave_updates"]               = false
-
 default["mysqlx"]["tunable"]["replicate_do_db"]             = nil
 default["mysqlx"]["tunable"]["replicate_do_table"]          = nil
 default["mysqlx"]["tunable"]["replicate_ignore_db"]         = nil
 default["mysqlx"]["tunable"]["replicate_ignore_table"]      = nil
 default["mysqlx"]["tunable"]["replicate_wild_do_table"]     = nil
 default["mysqlx"]["tunable"]["replicate_wild_ignore_table"] = nil
-
-default["mysqlx"]["tunable"]["sync_binlog"]                     = 0
-default["mysqlx"]["tunable"]["skip_slave_start"]                = false
+default["mysqlx"]["tunable"]["sync_binlog"] = 0
+default["mysqlx"]["tunable"]["skip_slave_start"] = "OFF"
 default["mysqlx"]["tunable"]["read_only"]                       = false
-
 default["mysqlx"]["tunable"]["log_error"]                       = nil
 default["mysqlx"]["tunable"]["log_warnings"]                    = false
 default["mysqlx"]["tunable"]["slow_query_log"]                  = true
 default["mysqlx"]["tunable"]["log_queries_not_using_indexes"]   = true
 default["mysqlx"]["tunable"]["log_bin_trust_function_creators"] = false
-
 default["mysqlx"]["tunable"]["innodb_file_format"] = "Barracuda"
 default["mysqlx"]["tunable"]["innodb_log_file_size"]            = "5M"
 default["mysqlx"]["tunable"]["innodb_buffer_pool_size"]         = "128M"
@@ -141,19 +125,22 @@ default["mysqlx"]["tunable"]["innodb_flush_log_at_trx_commit"] = "1"
 default["mysqlx"]["tunable"]["innodb_support_xa"] = "ON"
 default["mysqlx"]["tunable"]["innodb_table_locks"] = "ON"
 default["mysqlx"]["tunable"]["skip-innodb-doublewrite"] = false
-
 default["mysqlx"]["tunable"]["transaction-isolation"] = nil
-
 default["mysqlx"]["tunable"]["query_cache_limit"]    = "1M"
 default["mysqlx"]["tunable"]["query_cache_size"]     = "16M"
-
 default["mysqlx"]["tunable"]["long_query_time"]      = 2
 default["mysqlx"]["tunable"]["expire_logs_days"]     = 10
 default["mysqlx"]["tunable"]["max_binlog_size"]      = "100M"
 default["mysqlx"]["tunable"]["binlog_cache_size"]    = "32K"
 
+# Other settings
+default["mysqlx"]["auto_increment_increment"] = 1
+default["mysqlx"]["auto_increment_offset"] = 1
+default["mysqlx"]["allow_remote_root"]               = false
+default["mysqlx"]["remove_anonymous_users"]          = false
+default["mysqlx"]["remove_test_database"]            = false
+default["mysqlx"]["root_network_acl"]                = nil
 default["mysqlx"]["tmpdir"] = ["/tmp"]
-
 default["mysqlx"]["log_files_in_group"] = false
 default["mysqlx"]["innodb_status_file"] = false
 
